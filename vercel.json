@@ -28,20 +28,8 @@
   ],
   "crons": [
     {
-      "path": "/api/crons/morning",
-      "schedule": "0 7 * * *"
-    },
-    {
-      "path": "/api/crons/morning",
-      "schedule": "30 23 * * *"
-    },
-    {
       "path": "/api/crons/afternoon",
       "schedule": "0 14 * * *"
-    },
-    {
-      "path": "/api/crons/evening",
-      "schedule": "0 20 * * *"
     },
     {
       "path": "/api/crons/night",
