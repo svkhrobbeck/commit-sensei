@@ -29,11 +29,11 @@
   "crons": [
     {
       "path": "/api/crons/afternoon",
-      "schedule": "0 14 * * *"
+      "schedule": "0 9 * * *"
     },
     {
       "path": "/api/crons/night",
-      "schedule": "45 23 * * *"
+      "schedule": "55 18 * * *"
     }
   ]
 }
