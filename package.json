@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist",
     "start": "node dist/server",
-    "build": "yarn clean && tsc && node --experimental-specifier-resolution=node dist/build",
+    "build": "yarn clean && tsc && node dist/build",
     "typecheck": "tsc --noEmit true",
     "env": "vercel env pull .env",
     "start:dev": "vercel dev --listen 3000",
