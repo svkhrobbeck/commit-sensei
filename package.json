@@ -1,0 +1,52 @@
+{
+  "name": "commit-sensei",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "start": "node dist/server",
+    "build": "yarn clean && tsc && node dist/build",
+    "typecheck": "tsc --noEmit true",
+    "env": "vercel env pull .env",
+    "start:dev": "vercel dev --listen 3000",
+    "start:local": "nodemon",
+    "start:tunnel": "npx -y cloudflared tunnel --url http://localhost:3000",
+    "start:webhook": "npm run start:tunnel & npm run start:dev",
+    "start:polling": "npm run env && npm run start:local"
+  },
+  "keywords": [],
+  "author": "Suhrobbek Soatov",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/rest": "^21.1.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/helmet": "^4.0.0",
+    "@types/morgan": "^1.9.9",
+    "axios": "^1.7.9",
+    "chalk": "^5.4.1",
+    "cors": "^2.8.5",
+    "dedent": "^1.5.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "googleapis": "^144.0.0",
+    "grammy": "^1.34.0",
+    "helmet": "^8.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "tsx": "^4.19.2",
+    "vercel-grammy": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.7",
+    "@types/node-cron": "^3.0.11",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

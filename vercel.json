@@ -1,0 +1,47 @@
+{
+  "installCommand": "yarn --omit=dev",
+  "buildCommand": "yarn build",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    },
+    {
+      "src": "api/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "outputDirectory": "dist",
+  "routes": [
+    {
+      "src": "/api/update",
+      "dest": "api/update.ts"
+    },
+    {
+      "src": "/api/webhook",
+      "dest": "api/webhook.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "api/server.ts"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/crons/morning",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/crons/afternoon",
+      "schedule": "0 14 * * *"
+    },
+    {
+      "path": "/api/crons/evening",
+      "schedule": "0 20 * * *"
+    },
+    {
+      "path": "/api/crons/night",
+      "schedule": "45 23 * * *"
+    }
+  ]
+}
