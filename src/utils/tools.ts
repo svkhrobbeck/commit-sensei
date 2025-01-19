@@ -1,6 +1,4 @@
 import moment from "moment";
-import "moment/dist/locale/uz-latn";
-moment.locale("uz-latn");
 
 export const delay = (ms: number) => {
   return new Promise(resolve => setTimeout(resolve, ms));
