@@ -32,6 +32,10 @@
       "schedule": "0 7 * * *"
     },
     {
+      "path": "/api/crons/morning",
+      "schedule": "30 23 * * *"
+    },
+    {
       "path": "/api/crons/afternoon",
       "schedule": "0 14 * * *"
     },

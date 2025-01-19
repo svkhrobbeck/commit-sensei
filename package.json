@@ -2,12 +2,11 @@
   "name": "commit-sensei",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
     "start": "node dist/server",
-    "build": "yarn clean && tsc && node dist/build",
+    "build": "yarn clean && tsc && node --experimental-specifier-resolution=node dist/build",
     "typecheck": "tsc --noEmit true",
     "env": "vercel env pull .env",
     "start:dev": "vercel dev --listen 3000",
@@ -38,6 +37,7 @@
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
     "node-cron": "^3.0.3",
+    "octokit": "^4.1.0",
     "tsx": "^4.19.2",
     "vercel-grammy": "^1.0.0"
   },
