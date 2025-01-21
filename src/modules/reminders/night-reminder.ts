@@ -1,9 +1,9 @@
 import dedent from "dedent";
 
+import summaryReminder from "./summary-reminder";
 import { getAllRepoCommitCounts } from "../github";
 import { delay, formatDate, notifyDevelopers } from "../../utils";
 import { getDeadline, getSetting, setDeadline, setSetting } from "../sheets";
-import summaryReminder from "./summary-reminder";
 
 const nightReminder = async () => {
   const todayCommitCounts = await getAllRepoCommitCounts();

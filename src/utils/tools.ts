@@ -16,3 +16,17 @@ export const getDaysInMs = (day: number) => {
   const dayInMs = 1000 * 60 * 60 * 24;
   return dayInMs * day;
 };
+
+export const getUzbekistanTime = (date: Date | number | string): Date => {
+  const now = new Date(date);
+  const utcYear = now.getUTCFullYear();
+  const utcMonth = now.getUTCMonth();
+  const utcDate = now.getUTCDate();
+  const utcHours = now.getUTCHours();
+  const utcMinutes = now.getUTCMinutes();
+  const utcSeconds = now.getUTCSeconds();
+  const utcMilliseconds = now.getUTCMilliseconds();
+
+  const uzbTime = new Date(utcYear, utcMonth, utcDate, utcHours + 5, utcMinutes, utcSeconds, utcMilliseconds);
+  return uzbTime;
+};
