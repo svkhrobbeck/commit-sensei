@@ -28,7 +28,7 @@ const nightReminder = async () => {
       const channel_message = dedent`<b>
       #daily_log
       
-      Kecha ${todayDate} da githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!</b>`;
+      Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!</b>`;
 
       await notifyDevelopers(message, false);
       await delay(1000);
@@ -46,7 +46,7 @@ const nightReminder = async () => {
       
       Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
         todayTask.total
-      })ni to'liq bajardingiz, ${
+      } ta)ni to'liq bajardingiz, ${
         todayCommitCounts > setting.total
           ? "hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
           : ""
@@ -54,9 +54,9 @@ const nightReminder = async () => {
 
       const channel_message = dedent`<b>#daily_log
         
-      Kecha ${todayDate} da githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
+      Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
         todayTask.total
-      })ni to'liq bajardingiz!! ${
+      } ta)ni to'liq bajardingiz!! ${
         todayCommitCounts > setting.total
           ? "Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
           : ""
