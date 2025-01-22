@@ -20,4 +20,3 @@ cron.schedule("0 7 * * *", morningReminder);
 cron.schedule("0 14 * * *", afternoonReminder);
 cron.schedule("0 20 * * *", eveningReminder);
 cron.schedule("45 23 * * *", nightReminder);
-nightReminder();
