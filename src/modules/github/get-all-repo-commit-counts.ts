@@ -1,6 +1,6 @@
 import { delay } from "../../utils";
 import { getWeeklyActiveRepos } from ".";
-import getTodaysCommits from "./get-commits";
+import getTodaysCommits from "./get-todays-commits";
 
 const getAllRepoCommitCounts = async () => {
   const repos = await getWeeklyActiveRepos();

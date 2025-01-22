@@ -17,5 +17,5 @@ export interface ISetting {
   total: number;
   completed: number;
   summaryDate: string;
-  avarageDailyCommitCount: number;
+  averageDailyCommitCount: number;
 }
