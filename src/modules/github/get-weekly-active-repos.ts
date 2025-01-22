@@ -1,29 +1,37 @@
 import { octokit } from "../../services";
+import { getDaysInMs, getUzbekistanTime } from "../../utils";
 
 const getWeeklyActiveRepos = async () => {
   let allRepos: any[] = [];
   let page = 1;
 
-  const oneWeekAgo = new Date();
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-  const sinceDate = oneWeekAgo.toISOString();
+  const today = new Date();
+  const oneDayAgo = getUzbekistanTime(today.getTime() - getDaysInMs(7));
+  const sinceDate = oneDayAgo.toISOString();
+  console.log(sinceDate);
 
   try {
     while (true) {
       const { data: repos } = await octokit.request("GET /user/repos", {
+        username: process.env.GITHUB_USERNAME!,
         per_page: 100,
+        sort: "updated",
         page,
-        since: sinceDate,
+        direction: "desc",
       });
 
-      allRepos = [...allRepos, ...repos];
+      repos.forEach(repo => {
+        allRepos.push(repo);
+      });
 
       if (repos.length < 100) break;
 
       page++;
     }
 
-    return allRepos;
+    const activeRepos = allRepos.filter(repo => new Date(repo.updated_at) >= oneDayAgo);
+
+    return activeRepos;
   } catch (error) {
     console.error("Error fetching repositories:", error);
     return [];

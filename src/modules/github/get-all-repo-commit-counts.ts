@@ -1,13 +1,16 @@
 import { delay } from "../../utils";
-import { getTodayPushEvents, getWeeklyActiveRepos } from ".";
+import { getWeeklyActiveRepos } from ".";
+import getTodaysCommits from "./get-commits";
 
 const getAllRepoCommitCounts = async () => {
   const repos = await getWeeklyActiveRepos();
   let count = 0;
 
+  console.log(repos.map(i => i.name));
+
   for (const repo of repos) {
-    const { commitsLength } = await getTodayPushEvents(repo.name!);
-    count += commitsLength;
+    const { commits } = await getTodaysCommits(repo.name!);
+    count += commits.length;
     await delay(100);
   }
 
