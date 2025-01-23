@@ -54,7 +54,9 @@ class Spreadsheet {
     }
   }
 
-  public async get(spreadsheetId: string, range: string, withKey = false): Promise<any[][] | any[]> {
+  public async get(spreadsheetId: string, range: string, withKey = false, checkIdx?: number): Promise<any[][] | any[]> {
+    const hasCheckIndex = typeof checkIdx === "number" && checkIdx >= 0;
+
     if (withKey) {
       const response = await spreadsheets.values.get({ spreadsheetId, range });
       const values = response.data.values || [];
@@ -82,11 +84,23 @@ class Spreadsheet {
         return formattedRow;
       });
 
-      return mappedValues;
+      return hasCheckIndex ? mappedValues.filter(row => row[keys[checkIdx]]) : mappedValues;
     } else {
       try {
         const response = await spreadsheets.values.get({ spreadsheetId, range });
-        return response.data.values || [];
+
+        const values = response.data.values || [];
+
+        const formattedValues: any[][] = values.map(row =>
+          row.map((cell: any) => {
+            if (cell === "FALSE") return false;
+            if (cell === "TRUE") return true;
+            if (cell === "") return null;
+            return cell;
+          })
+        );
+
+        return hasCheckIndex ? formattedValues.filter(row => row[checkIdx]) : formattedValues;
       } catch (error) {
         this.handleError(error, "get", range);
         return [];
