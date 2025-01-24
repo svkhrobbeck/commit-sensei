@@ -39,7 +39,8 @@
     "node-cron": "^3.0.3",
     "octokit": "^4.1.0",
     "tsx": "^4.19.2",
-    "vercel-grammy": "^1.0.0"
+    "vercel-grammy": "^1.0.0",
+    "zutsheet": "^1.1.2"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.14",
