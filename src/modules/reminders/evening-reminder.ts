@@ -18,7 +18,7 @@ const eveningReminder = async () => {
       const message = dedent`
     #evening_reminder
     
-    Bugun ${todayCommitCounts} ta commit yozdingiz, kun oxirigacha yana 4 soat vaqtingiz bor, 23:45 gacha ${stockCommit} ta commit yozishingiz kerak. Agarda limitni bajarmasangiz jarima yoziladi!!`;
+    Bugun ${todayCommitCounts} ta commit yozdingiz, kun oxirigacha yana 4 soat vaqtingiz bor, 23:58 gacha ${stockCommit} ta commit yozishingiz kerak. Agarda limitni bajarmasangiz jarima yoziladi!!`;
 
       await notifyDevelopers(message, false);
     } else {

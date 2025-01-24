@@ -1,6 +1,6 @@
 import moment from "moment";
 import { getDeadline, getSetting, setDeadline, setHistory, setSetting } from "../sheets";
-import { delay, formatDate, getDaysInMs, notifyDevelopers } from "../../utils";
+import { delay, formatDate, getDaysInMs, notifyDevelopers, sendMessageToChannel } from "../../utils";
 import dedent from "dedent";
 import { weekDays } from "../../helpers/constants";
 
@@ -24,7 +24,7 @@ const summaryReminder = async () => {
   await setHistory(deadline);
   await delay(1000);
 
-  const message = dedent`#summary 
+  const message = dedent`#summary
   
   Bu haftalik statistikalar:
 
@@ -34,12 +34,15 @@ const summaryReminder = async () => {
   Bu hafta ${
     completedCount < setting.total
       ? `sizga ${penaltyCount} ta jarima yozildi!`
-      : `siz unumdor ishladingiz va rejadan ${completedCount - setting.total} ta ko'p commit yozdingiz!`
+      : `siz unumdor ishladingiz va ${completedCount} ta commit yozdingiz, bu esa rejadan ${
+          completedCount - setting.total
+        } ta ko'p demakdir!!`
   }
   `;
 
   await notifyDevelopers(message, false);
   await delay(1000);
+  await sendMessageToChannel(message)
 
   const newDeadlines = [];
 

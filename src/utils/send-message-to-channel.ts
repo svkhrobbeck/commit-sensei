@@ -7,7 +7,7 @@ const channelId = process.env.CHANNEL_ID!;
 const sendMessageToChannel = async (message: string, withButton: boolean = true) => {
   const inlineButton = new InlineKeyboard().url(
     "Natijalarni jadvalda kuzatish",
-    "https://docs.google.com/spreadsheets/d/1OqMoJ8N1MMmYx4gnkKkTeYfFT7SHsCLYuXZQM1Fk5Vc"
+    `https://docs.google.com/spreadsheets/d/${process.env.SPREADSHEET_ID}`
   );
 
   if (withButton) {
