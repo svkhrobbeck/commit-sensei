@@ -25,15 +25,5 @@
       "src": "/(.*)",
       "dest": "api/server.ts"
     }
-  ],
-  "crons": [
-    {
-      "path": "/api/crons/afternoon",
-      "schedule": "0 9 * * *"
-    },
-    {
-      "path": "/api/crons/night",
-      "schedule": "55 18 * * *"
-    }
   ]
 }
