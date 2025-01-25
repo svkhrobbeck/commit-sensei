@@ -6,8 +6,6 @@ const getAllRepoCommitCounts = async () => {
   const repos = await getWeeklyActiveRepos();
   let count = 0;
 
-  console.log(repos.map(i => i.name));
-
   for (const repo of repos) {
     const { commits } = await getTodaysCommits(repo.name!);
     count += commits.length;
