@@ -9,10 +9,10 @@ const afternoonReminder = async () => {
   const todayCommitCounts = await getAllRepoCommitCounts();
   const deadline = await getDeadline();
 
-  const currentDate = new Date();
-  const date = formatDate(currentDate, "DD-MM-YYYY");
+  const dateInstance = new Date();
+  const date = formatDate(dateInstance, "DD-MM-YYYY");
 
-  if (currentDate.getDay() === 1) {
+  if (dateInstance.getDay() === 1) {
     const deadline = await getDeadline();
 
     const message = dedent`
