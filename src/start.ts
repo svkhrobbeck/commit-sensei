@@ -5,7 +5,6 @@ import app from "./server";
 // import bot from "./bot/core";
 
 import { afternoonReminder, eveningReminder, morningReminder, nightReminder } from "./modules/reminders";
-import { getAllRepoCommitCounts } from "./modules/github";
 
 const PORT = process.env.PORT!;
 
@@ -21,4 +20,3 @@ cron.schedule("0 7 * * *", morningReminder);
 cron.schedule("0 14 * * *", afternoonReminder);
 cron.schedule("0 20 * * *", eveningReminder);
 cron.schedule("58 23 * * *", nightReminder);
-getAllRepoCommitCounts();
