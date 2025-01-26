@@ -46,11 +46,11 @@ const nightReminder = async () => {
       
       Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
         todayTask.total
-      } ta)ni to'liq bajardingiz, ${
+      } ta)ni to'liq bajardingiz!!${
         todayCommitCounts > setting.total
-          ? "hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
+          ? " Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
           : ""
-      }!!`;
+      }`;
 
       const channel_message = dedent`<b>#daily_log
         

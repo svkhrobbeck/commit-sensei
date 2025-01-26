@@ -33,16 +33,16 @@ const summaryReminder = async () => {
 
   Bu hafta ${
     completedCount < setting.total
-      ? `sizga ${penaltyCount} ta jarima yozildi!`
+      ? `sizga ${penaltyCount} ta jarima yozildi! Kelasi hafta faolroq bo'lasiz degan umiddaman`
       : `siz unumdor ishladingiz va ${completedCount} ta commit yozdingiz, bu esa rejadan ${
           completedCount - setting.total
-        } ta ko'p demakdir!!`
+        } ta ko'p, keyingi haftada ham shunday davom eting!`
   }
   `;
 
   await notifyDevelopers(message, false);
   await delay(1000);
-  await sendMessageToChannel(message)
+  await sendMessageToChannel(message);
 
   const newDeadlines = [];
 
