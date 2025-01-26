@@ -3,11 +3,12 @@ import { getDeadline, getSetting } from "../sheets";
 import { formatDate, notifyDevelopers } from "../../utils";
 
 const morningReminder = async () => {
-  const date = formatDate(new Date(), "DD-MM-YYYY");
+  const dateInstance = new Date();
+  const date = formatDate(dateInstance, "DD-MM-YYYY");
   const deadline = await getDeadline();
   const setting = await getSetting();
 
-  const singleDeadline = deadline.find(item => item.date === date);
+  const singleDeadline = deadline.find(item => item.date === date && item.id === dateInstance.getDay() && !item.passed);
 
   const message = dedent`
     #morning_reminder

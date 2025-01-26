@@ -6,9 +6,7 @@ const getWeeklyActiveRepos = async () => {
   let page = 1;
 
   const today = new Date();
-  const oneDayAgo = getUzbekistanTime(today.getTime() - getDaysInMs(7));
-  const sinceDate = oneDayAgo.toISOString();
-  console.log(sinceDate);
+  const aWeekAgo = getUzbekistanTime(today.getTime() - getDaysInMs(7));
 
   try {
     while (true) {
@@ -29,7 +27,7 @@ const getWeeklyActiveRepos = async () => {
       page++;
     }
 
-    const activeRepos = allRepos.filter(repo => new Date(repo.updated_at) >= oneDayAgo);
+    const activeRepos = allRepos.filter(repo => new Date(repo.updated_at).getTime() >= aWeekAgo.getTime());
 
     return activeRepos;
   } catch (error) {

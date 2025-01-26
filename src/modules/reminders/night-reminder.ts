@@ -10,9 +10,13 @@ const nightReminder = async () => {
   const deadline = await getDeadline();
   const setting = await getSetting();
 
-  const todayDate = formatDate(Date.now(), "DD-MM-YYYY");
-  const isSummaryDay = new Date().getDay() === 0 && todayDate === setting.summaryDate;
-  const todayTaskIndex = deadline.findIndex(item => item.date === todayDate && !item.passed);
+  const dateInstance = new Date();
+  const todayDate = formatDate(dateInstance, "DD-MM-YYYY");
+
+  const isSummaryDay = dateInstance.getDay() === 0 && todayDate === setting.summaryDate;
+  const todayTaskIndex = deadline.findIndex(
+    item => item.date === todayDate && item.id === dateInstance.getDay() && !item.passed
+  );
 
   if (todayTaskIndex >= 0) {
     const todayTask = deadline[todayTaskIndex];

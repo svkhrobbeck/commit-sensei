@@ -8,8 +8,9 @@ const eveningReminder = async () => {
   const todayCommitCounts = await getAllRepoCommitCounts();
   const deadline = await getDeadline();
 
-  const todayDate = formatDate(Date.now(), "DD-MM-YYYY");
-  const todayTask = deadline.find(item => item.date === todayDate && !item.passed);
+  const dateInstance = new Date();
+  const todayDate = formatDate(dateInstance, "DD-MM-YYYY");
+  const todayTask = deadline.find(item => item.date === todayDate && dateInstance.getDay() === item.id && !item.passed);
 
   if (todayTask) {
     if (todayCommitCounts < todayTask.total) {
