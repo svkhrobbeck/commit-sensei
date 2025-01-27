@@ -3,7 +3,7 @@ import dedent from "dedent";
 import { weekDays } from "../../helpers/constants";
 import { getAllRepoCommitCounts } from "../github";
 import { getDeadline, getSetting } from "../sheets";
-import { formatDate, notifyDevelopers } from "../../utils";
+import { formatDate, notifyDevelopers, sendMessageToChannel } from "../../utils";
 
 const getStats = async () => {
   const dateInstance = new Date();
@@ -15,7 +15,7 @@ const getStats = async () => {
   const singleDeadline = deadline.find(item => item.date === date && item.id === dateInstance.getDay() && !item.passed);
 
   const message = dedent`
-    #morning_reminder
+    #morning_reminder (test)
     
     Bugun ${date}, ${weekDays[dateInstance.getDay()]}
     
@@ -24,6 +24,7 @@ const getStats = async () => {
   } Commitlarni hisoblashda o'tgan haftadagi jarimalar hisobga olinadi.`;
 
   await notifyDevelopers(message, false);
+  await sendMessageToChannel(message, true);
 };
 
 export default getStats;
