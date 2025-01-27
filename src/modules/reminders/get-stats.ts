@@ -15,7 +15,7 @@ const getStats = async () => {
   const singleDeadline = deadline.find(item => item.date === date && item.id === dateInstance.getDay() && !item.passed);
 
   const message = dedent`
-    #morning_reminder
+    #stats
     
     Bugun ${date}, ${weekDays[dateInstance.getDay()]}
     
