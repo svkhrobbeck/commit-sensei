@@ -14,14 +14,6 @@
   "outputDirectory": "dist",
   "routes": [
     {
-      "src": "/api/update",
-      "dest": "api/update.ts"
-    },
-    {
-      "src": "/api/webhook",
-      "dest": "api/webhook.ts"
-    },
-    {
       "src": "/(.*)",
       "dest": "api/server.ts"
     }
