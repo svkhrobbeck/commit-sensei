@@ -3,6 +3,7 @@ import dedent from "dedent";
 import { getDeadline } from "../sheets";
 import { getAllRepoCommitCounts } from "../github";
 import { formatDate, notifyDevelopers } from "../../utils";
+import { weekDays } from "../../helpers/constants";
 
 const eveningReminder = async () => {
   const todayCommitCounts = await getAllRepoCommitCounts();
@@ -18,6 +19,8 @@ const eveningReminder = async () => {
 
       const message = dedent`
     #evening_reminder
+
+    ${weekDays[dateInstance.getDay()]}
     
     Bugun ${todayCommitCounts} ta commit yozdingiz, kun oxirigacha yana 4 soat vaqtingiz bor, 23:58 gacha ${stockCommit} ta commit yozishingiz kerak. Agarda limitni bajarmasangiz jarima yoziladi!!`;
 
