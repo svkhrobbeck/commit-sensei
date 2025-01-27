@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import { getDeadline } from "../sheets";
 import { getAllRepoCommitCounts } from "../github";
-import { formatDate, notifyDevelopers } from "../../utils";
+import { formatDate, notifyDevelopers, sendMessageToChannel } from "../../utils";
 import { weekDays } from "../../helpers/constants";
 
 const afternoonReminder = async () => {
@@ -28,6 +28,7 @@ const afternoonReminder = async () => {
     } ta commit yozishingiz kerak. Commitlarni hisoblashda haftadagi jarimalar hisobga olinadi.`;
 
     await notifyDevelopers(message, false);
+    await sendMessageToChannel(message, false);
   } else {
     const todayTask = deadline.find(item => item.date === date);
 

@@ -1,4 +1,4 @@
-export const developerChadIds = [process.env.CHAT_ID!];
+export const developerChadIds = JSON.parse(process.env.CHAT_IDS || "[]");
 
 export const weekDays: { [key: number]: string } = {
   0: "Yakshanba",
