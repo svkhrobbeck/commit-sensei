@@ -8,7 +8,7 @@ export const { BOT_TOKEN: token, SECRET_TOKEN: secretToken = String(token).split
 
 const bot = new Bot(token!);
 
-bot.api.setMyCommands([{ command: "start", description: "Botni ishga tushirish" }]);
+bot.api.setMyCommands([{ command: "start", description: "Botni ishga tushirish" },]);
 
 bot.use(callbacksHandler);
 bot.use(commandsHandler);
