@@ -40,10 +40,6 @@ const nightReminder = async () => {
 
       await setSetting({ penaltyForNextWeek: setting.penaltyForNextWeek + stockCommit });
       await delay(2000);
-
-      if (isSummaryDay) {
-        summaryReminder();
-      }
     } else {
       const message = dedent`
       #night_reminder
@@ -71,6 +67,9 @@ const nightReminder = async () => {
     }
 
     await setDeadline(todayTaskIndex, [{ passed: true, done: todayCommitCounts }]);
+    if (isSummaryDay) {
+      summaryReminder();
+    }
   }
 };
 

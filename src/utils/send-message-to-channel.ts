@@ -6,10 +6,12 @@ import { delay } from "./tools";
 const channelIds = JSON.parse(process.env.CHANNEL_IDS || "[]");
 
 const sendMessageToChannel = async (message: string, withButton: boolean = true) => {
-  const inlineButton = new InlineKeyboard()
-    .url("Natijalarni jadvalda kuzatish", `https://docs.google.com/spreadsheets/d/${process.env.SPREADSHEET_ID}`)
-    .row()
-    .url("Github akkauntingiz", `https://github.com/${process.env.GITHUB_USERNAME}`);
+  const inlineButton = new InlineKeyboard().url(
+    "Github akkauntingiz",
+    `https://github.com/${process.env.GITHUB_USERNAME}`
+  );
+  // .row()
+  // .url("Natijalarni jadvalda kuzatish", `https://docs.google.com/spreadsheets/d/${process.env.SPREADSHEET_ID}`)
 
   for (const channelId of channelIds) {
     if (withButton) {
