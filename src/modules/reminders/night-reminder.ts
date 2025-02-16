@@ -18,6 +18,10 @@ const nightReminder = async () => {
     item => item.date === todayDate && item.id === dateInstance.getDay() && !item.passed
   );
 
+  const tomorrowDeadline = deadline.find(
+    item => item.id === (dateInstance.getDay() + 1 > 6 ? 0 : dateInstance.getDay())
+  );
+
   if (todayTaskIndex >= 0) {
     const todayTask = deadline[todayTaskIndex];
 
@@ -60,7 +64,9 @@ const nightReminder = async () => {
         todayCommitCounts > setting.total
           ? "Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
           : ""
-      } Ertanga yana kamida ${setting.averageDailyCommitCount} ta commit rejalangan, bajarishni unutmang!
+      } Ertanga yana kamida ${
+        tomorrowDeadline?.total || setting.averageDailyCommitCount
+      } ta commit rejalangan, bajarishni unutmang!
       </b>`;
       await notifyDevelopers(message, false);
       await sendMessageToChannel(channel_message);

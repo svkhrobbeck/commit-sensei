@@ -12,10 +12,12 @@ const summaryReminder = async () => {
   const newSummaryDate = formatDate(oldSummaryDate.getTime() + getDaysInMs(7), "DD-MM-YYYY");
 
   const completedCount = deadline.reduce((a, b) => a + b.done, 0);
+  const oldPenalties = setting.total - completedCount;
   const penaltyCount = deadline.reduce((a, b) => a + b.penaltyForNextWeek, 0);
+  const fullPenaltyCount = setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount;
 
   await setSetting({
-    penaltyFromLastWeek: setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount,
+    penaltyFromLastWeek: oldPenalties <= 0 ? fullPenaltyCount : oldPenalties + fullPenaltyCount,
     penaltyForNextWeek: 0,
     completed: completedCount,
     summaryDate: newSummaryDate,
