@@ -3,7 +3,7 @@ import { InlineKeyboard } from "grammy";
 import bot from "../bot/core";
 import { delay } from "./tools";
 
-const channelIds = JSON.parse(process.env.CHANNEL_IDS || "[]");
+const channelIds = String(process.env.CHAT_IDS).split("/").map(Number);
 
 const sendMessageToChannel = async (message: string, withButton: boolean = true) => {
   const inlineButton = new InlineKeyboard().url(

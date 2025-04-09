@@ -6,6 +6,7 @@ const notifyDevelopers = async (errorMessage: string, isError = true): Promise<v
   const telegramMessage = `${isError ? "<b>Xatolik yuz berdi</b>:" : ""}${extractErrorMessage(errorMessage)}`;
 
   for (const chatId of developerChadIds) {
+    console.log(chatId);
     await delay(2500);
     await bot.api.sendMessage(chatId, telegramMessage, { parse_mode: "HTML" });
   }

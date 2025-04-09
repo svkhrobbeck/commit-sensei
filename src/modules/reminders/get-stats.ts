@@ -19,7 +19,7 @@ const getStats = async () => {
     
     Bugun ${date}, ${weekDays[dateInstance.getDay()]}
     
-    Bugun kamida ${singleDeadline!.total || setting.averageDailyCommitCount} ta commit yozishingiz kerak edi va siz ${
+    Bugun kamida ${singleDeadline?.total || setting.averageDailyCommitCount} ta commit yozishingiz kerak edi va siz ${
     todayCommitCounts > 0 ? `${todayCommitCounts} ta commit yozdingiz!` : "hechqancha commit yozmadingiz."
   } Commitlarni hisoblashda o'tgan haftadagi jarimalar hisobga olinadi.`;
 
