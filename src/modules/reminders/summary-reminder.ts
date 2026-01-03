@@ -49,7 +49,7 @@ const summaryReminder = async () => {
     }
         `;
 
-    await notifyDevelopers({ user, message });
+    await notifyDevelopers({ user, message, channelMessage: message });
 
     const newDeadlines = [];
 

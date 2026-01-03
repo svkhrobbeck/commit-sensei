@@ -1,16 +1,16 @@
 import { Bot } from "grammy";
 
-import { errorHandler } from "./middlewares";
 import { callbacksHandler, commandsHandler } from "./handlers";
+import { errorHandlerMiddleware, ignoreOldMiddleware, limitMiddleware } from "./middlewares";
 
 export const { BOT_TOKEN: token, SECRET_TOKEN: secretToken = String(token).split(":").pop() } = process.env;
 
 const bot = new Bot(token!);
 
-bot.api.setMyCommands([{ command: "start", description: "Botni ishga tushirish" }]);
-
+bot.use(ignoreOldMiddleware(35));
+bot.use(limitMiddleware);
 bot.use(callbacksHandler);
 bot.use(commandsHandler);
-bot.catch(errorHandler);
+bot.catch(errorHandlerMiddleware);
 
 export default bot;

@@ -5,7 +5,7 @@ import { notifyDevelopers } from "@/utils";
 
 import { getUsers } from "@/modules/sheets";
 
-const errorHandler: ErrorHandler = async err => {
+const errorHandlerMiddleware: ErrorHandler = async err => {
   const errorMessage = extractErrorMessage(err.error);
   const users = await getUsers();
 
@@ -23,4 +23,4 @@ const errorHandler: ErrorHandler = async err => {
   }
 };
 
-export default errorHandler;
+export default errorHandlerMiddleware;

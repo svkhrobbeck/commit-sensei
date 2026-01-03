@@ -25,9 +25,8 @@ const notifyDevelopers = async ({ user, message = "", ...opts }: NotifyDeveloper
     return;
   }
 
-  const msgForChannel = opts.channelMessage ?? message;
-  if (user.mode === "channel" && msgForChannel) {
-    await bot.api.sendMessage(user.channelId, msgForChannel, {
+  if (user.mode === "channel" && opts.channelMessage) {
+    await bot.api.sendMessage(user.channelId, opts.channelMessage, {
       parse_mode: "HTML",
       reply_markup: user.channelMessageInlineButtons ? channelInlineButton : undefined,
     });
