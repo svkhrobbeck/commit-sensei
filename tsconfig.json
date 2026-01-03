@@ -1,23 +1,43 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "lib": ["es2020"],
+    "target": "esnext",
+    "lib": ["esnext"],
+    "module": "preserve",
+    "moduleDetection": "force",
+
+    // JSX setup
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
 
     // Bundler mode
-    "moduleResolution": "node",
+    "noEmit": false,
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
+
+    // Best practices
+    "skipLibCheck": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
 
-    "outDir": "./dist"
+    /* Aliases */
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["./src/**/*", "./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.json"],
+  "include": ["./src/**/*", "./src/**/*.{mts,ts,json,js,mjs,cjs}"],
   "exclude": ["node_modules"]
 }
