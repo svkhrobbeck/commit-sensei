@@ -16,7 +16,7 @@
         "node-cron": "^4.2.1",
         "nodemon": "^3.1.11",
         "octokit": "^5.0.5",
-        "utilzify": "^1.8.1",
+        "utilzify": "^1.8.2",
         "zutsheet": "^2.6.0",
       },
       "devDependencies": {
@@ -622,7 +622,7 @@
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
 
-    "utilzify": ["utilzify@1.8.1", "", { "dependencies": { "axios": "^1.7.9", "exceljs": "^4.4.0", "lodash": "^4.17.21", "moment": "^2.30.1" } }, "sha512-KpDFlbJ1jo+HM2bB1LxhLP0R3URd2m9rKp6BX4r2j6UtjrkJAL+/b2sxJb065ff8APbmBuL1R9t9tFU0gHaRJw=="],
+    "utilzify": ["utilzify@1.8.2", "", { "dependencies": { "axios": "^1.7.9", "exceljs": "^4.4.0", "lodash": "^4.17.21", "moment": "^2.30.1" } }, "sha512-26smkD9CfhXiClmTlM9HX7DUk4kUlXc3CwOZVK9UvZuixWRrq6LvwN9WJTaGP/vy71WYKSuJaKVOn7CGlcvFaw=="],
 
     "uuid": ["uuid@8.3.2", "", { "bin": { "uuid": "dist/bin/uuid" } }, "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="],
 
@@ -691,6 +691,8 @@
     "unzipper/readable-stream": ["readable-stream@2.3.8", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.3", "isarray": "~1.0.0", "process-nextick-args": "~2.0.0", "safe-buffer": "~5.1.1", "string_decoder": "~1.1.1", "util-deprecate": "~1.0.1" } }, "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="],
 
     "zip-stream/archiver-utils": ["archiver-utils@3.0.4", "", { "dependencies": { "glob": "^7.2.3", "graceful-fs": "^4.2.0", "lazystream": "^1.0.0", "lodash.defaults": "^4.2.0", "lodash.difference": "^4.5.0", "lodash.flatten": "^4.4.0", "lodash.isplainobject": "^4.0.6", "lodash.union": "^4.6.0", "normalize-path": "^3.0.0", "readable-stream": "^3.6.0" } }, "sha512-KVgf4XQVrTjhyWmx6cte4RxonPLR9onExufI1jhvw/MQ4BB6IsZD5gT8Lq+u/+pRkWna/6JoHpiQioaqFP5Rzw=="],
+
+    "zutsheet/utilzify": ["utilzify@1.8.1", "", { "dependencies": { "axios": "^1.7.9", "exceljs": "^4.4.0", "lodash": "^4.17.21", "moment": "^2.30.1" } }, "sha512-KpDFlbJ1jo+HM2bB1LxhLP0R3URd2m9rKp6BX4r2j6UtjrkJAL+/b2sxJb065ff8APbmBuL1R9t9tFU0gHaRJw=="],
 
     "@typescript-eslint/typescript-estree/minimatch/brace-expansion": ["brace-expansion@2.0.2", "", { "dependencies": { "balanced-match": "^1.0.0" } }, "sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ=="],
 

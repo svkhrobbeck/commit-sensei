@@ -10,7 +10,10 @@
     "build": "bun clean && tsc",
     "typecheck": "tsc --noEmit true",
     "lint": "eslint . --quiet --max-warnings 0",
-    "format": "prettier --write \"**/*.{json,ts,tsx,md,scss,css,html}\""
+    "format": "prettier --write \"**/*.{json,ts,tsx,md,scss,css,html}\"",
+    "stop": "pm2 stop ecosystem.config.cjs",
+    "start": "pm2 start ecosystem.config.cjs",
+    "restart": "pm2 restart ecosystem.config.cjs"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
@@ -25,7 +28,7 @@
     "node-cron": "^4.2.1",
     "nodemon": "^3.1.11",
     "octokit": "^5.0.5",
-    "utilzify": "^1.8.1",
+    "utilzify": "^1.8.2",
     "zutsheet": "^2.6.0"
   },
   "devDependencies": {
