@@ -1,20 +1,17 @@
-import moment from "moment";
-
-export const delay = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+import { getFormattedDate } from "utilzify";
 
 export const formatDate = (date: string | Date | number, format: string = "DD-MMMM, YYYY. HH:mm"): string => {
-  return date ? moment(date).format(format) : "";
+  return getFormattedDate(new Date(date), format);
 };
 
+// eslint-disable-next-line
 export const getKeyByValue = <T extends Record<string, any>>(obj: T, value: any): string | undefined => {
   return Object.keys(obj).find(key => obj[key] === value);
 };
 
-export const getDaysInMs = (day: number) => {
+export const getDaysInMs = (days: number = 1) => {
   const dayInMs = 1000 * 60 * 60 * 24;
-  return dayInMs * day;
+  return dayInMs * days;
 };
 
 export const getUzbekistanTime = (date: Date | number | string): Date => {

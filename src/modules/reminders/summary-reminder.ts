@@ -1,59 +1,65 @@
 import moment from "moment";
-import { getDeadline, getSetting, setDeadline, setHistory, setSetting } from "../sheets";
-import { delay, formatDate, getDaysInMs, notifyDevelopers, sendMessageToChannel } from "../../utils";
 import dedent from "dedent";
-import { weekDays } from "../../helpers/constants";
+import { delay } from "utilzify";
+
+import { weekDays } from "@/helpers/constants";
+import { formatDate, getDaysInMs, notifyDevelopers } from "@/utils";
+
+import { getDeadline, getSettings, getUsers, setDeadline, setHistory, setSetting } from "@/modules/sheets";
 
 const summaryReminder = async () => {
-  const setting = await getSetting();
-  const deadline = await getDeadline();
+  const users = await getUsers();
+  const settings = await getSettings();
 
-  const oldSummaryDate = moment(setting.summaryDate, "DD-MM-YYYY").toDate();
-  const newSummaryDate = formatDate(oldSummaryDate.getTime() + getDaysInMs(7), "DD-MM-YYYY");
+  for (const user of users) {
+    const setting = settings.find(s => s.userId === user.id)!;
+    const deadline = await getDeadline(user.deadlineRange);
 
-  const completedCount = deadline.reduce((a, b) => a + b.done, 0);
-  const oldPenalties = setting.total - completedCount;
-  const penaltyCount = deadline.reduce((a, b) => a + b.penaltyForNextWeek, 0);
-  const fullPenaltyCount = setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount;
+    const oldSummaryDate = moment(setting.summaryDate, "DD-MM-YYYY").toDate();
+    const newSummaryDate = formatDate(oldSummaryDate.getTime() + getDaysInMs(7), "DD-MM-YYYY");
 
-  await setSetting({
-    penaltyFromLastWeek: oldPenalties <= 0 ? fullPenaltyCount : oldPenalties + fullPenaltyCount,
-    penaltyForNextWeek: 0,
-    completed: completedCount,
-    summaryDate: newSummaryDate,
-  });
+    const completedCount = deadline.reduce((a, b) => a + b.done, 0);
+    const oldPenalties = setting.total - completedCount;
+    const penaltyCount = deadline.reduce((a, b) => a + b.penaltyForNextWeek, 0);
+    const fullPenaltyCount = setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount;
 
-  await setHistory(deadline);
-  await delay(1000);
+    await setSetting({
+      penaltyFromLastWeek: oldPenalties <= 0 ? fullPenaltyCount : oldPenalties + fullPenaltyCount,
+      penaltyForNextWeek: 0,
+      completed: completedCount,
+      summaryDate: newSummaryDate,
+    });
 
-  const message = dedent`#summary
-  
-  Bu haftalik statistikalar:
+    await setHistory(deadline);
+    await delay(1000);
 
-  <b>${deadline.map(item => `${weekDays[item.id]}: ${item.done} ta`).join("\n")}</b>
-  commitlar yozildi.
+    const message = dedent`#summary
+    
+    Bu haftalik statistikalar:
+    
+    <b>${deadline.map(item => `${weekDays[item.id]}: ${item.done} ta`).join("\n")}</b>
+    commitlar yozildi.
+    
+    Bu hafta ${
+      completedCount < setting.total
+        ? `sizga ${penaltyCount} ta jarima yozildi! Kelasi hafta faolroq bo'lasiz degan umiddaman`
+        : `siz unumdor ishladingiz va ${completedCount} ta commit yozdingiz, bu esa rejadan ${
+            completedCount - setting.total
+          } ta ko'p, keyingi haftada ham shunday davom eting!`
+    }
+        `;
 
-  Bu hafta ${
-    completedCount < setting.total
-      ? `sizga ${penaltyCount} ta jarima yozildi! Kelasi hafta faolroq bo'lasiz degan umiddaman`
-      : `siz unumdor ishladingiz va ${completedCount} ta commit yozdingiz, bu esa rejadan ${
-          completedCount - setting.total
-        } ta ko'p, keyingi haftada ham shunday davom eting!`
+    await notifyDevelopers({ user, message });
+
+    const newDeadlines = [];
+
+    for (let i = 1; i <= 7; i++) {
+      const date = formatDate(oldSummaryDate.getTime() + getDaysInMs(i), "DD-MM-YYYY");
+      newDeadlines.push({ date, passed: false, done: 0 });
+    }
+
+    await setDeadline(user.deadlineStartCol, 0, newDeadlines);
   }
-  `;
-
-  await notifyDevelopers(message, false);
-  await delay(1000);
-  await sendMessageToChannel(message);
-
-  const newDeadlines = [];
-
-  for (let i = 1; i <= 7; i++) {
-    const date = formatDate(oldSummaryDate.getTime() + getDaysInMs(i), "DD-MM-YYYY");
-    newDeadlines.push({ date, passed: false, done: 0 });
-  }
-
-  await setDeadline(0, newDeadlines);
 };
 
 export default summaryReminder;

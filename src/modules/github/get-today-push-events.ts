@@ -1,12 +1,11 @@
 import get from "lodash/get";
 
-import { octokit } from "../../services";
-import { getUzbekistanTime } from "../../utils";
+import { createOcktokit } from "@/services";
+import { getUzbekistanTime } from "@/utils";
 
-const owner = process.env.GITHUB_USERNAME!;
-
-const getTodayPushEvents = async (repo: string) => {
-  const { data: events } = await octokit.request("GET /repos/{owner}/{repo}/events", { owner, repo });
+const getTodayPushEvents = async (username: string, token: string, repo: string) => {
+  const octokit = createOcktokit(token);
+  const { data: events } = await octokit.request("GET /repos/{owner}/{repo}/events", { owner: username, repo });
 
   const today = getUzbekistanTime(new Date());
   const startOfDay = new Date(today.setHours(0, 0, 0, 0)).getTime();
@@ -14,9 +13,7 @@ const getTodayPushEvents = async (repo: string) => {
 
   const pushEvents = events.filter(event => {
     const eventDate = getUzbekistanTime(event.created_at!);
-    return (
-      event.type === "PushEvent" && eventDate.getTime() >= startOfDay && eventDate.getTime() <= endOfDay
-    );
+    return event.type === "PushEvent" && eventDate.getTime() >= startOfDay && eventDate.getTime() <= endOfDay;
   });
 
   const commitsLength = pushEvents.reduce((a, b) => {

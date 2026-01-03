@@ -1,8 +1,11 @@
-import { octokit } from "../../services";
-import { getDaysInMs, getUzbekistanTime } from "../../utils";
+import { createOcktokit } from "@/services";
+import { getDaysInMs, getUzbekistanTime } from "@/utils";
 
-const getWeeklyActiveRepos = async () => {
-  let allRepos: any[] = [];
+const getWeeklyActiveRepos = async (username: string, token: string) => {
+  const octokit = createOcktokit(token);
+  
+  // eslint-disable-next-line
+  const allRepos: any[] = [];
   let page = 1;
 
   const today = new Date();
@@ -11,7 +14,7 @@ const getWeeklyActiveRepos = async () => {
   try {
     while (true) {
       const { data: repos } = await octokit.request("GET /user/repos", {
-        username: process.env.GITHUB_USERNAME!,
+        username,
         per_page: 100,
         sort: "updated",
         page,

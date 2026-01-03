@@ -1,20 +1,14 @@
+import { spreadsheet } from "@/services";
+import { type IHistory } from "@/helpers";
+
 import { getHistory } from ".";
-import { IDeadline } from "../../helpers/interfaces";
-import { spreadsheet } from "../../services";
 
 const spreadsheetId = process.env.SPREADSHEET_ID!;
 
-const setHistory = async (deadlines: Partial<Omit<IDeadline, "passed" | "id">>[]) => {
+const setHistory = async (pastDeadlines: Partial<Omit<IHistory, "passed" | "id" | "total" | "penaltyForNextWeek">>[]) => {
   const history = await getHistory();
 
-  const values = deadlines.map(item => [
-    item.date,
-    item.done,
-    item.limit,
-    item.penalty,
-    item.total,
-    item.penaltyForNextWeek,
-  ]);
+  const values = pastDeadlines.map(item => [item.userId, item.date, item.done, item.limit, item.penalty]);
 
   await spreadsheet.set(spreadsheetId, `History!A${4 + history.length}`, values);
 };

@@ -1,14 +1,15 @@
-import { octokit } from "../../services";
-import { getUzbekistanTime } from "../../utils";
+import { createOcktokit } from "@/services";
+import { getUzbekistanTime } from "@/utils";
 
-async function getTodaysCommits(repo: string) {
+async function getTodaysCommits(username: string, token: string, repo: string) {
+  const octokit = createOcktokit(token);
   const today = getUzbekistanTime(Date.now());
   const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
   const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
 
   try {
     const response = await octokit.request("GET /repos/{owner}/{repo}/commits", {
-      owner: process.env.GITHUB_USERNAME!,
+      owner: username,
       repo,
       since: startOfDay,
       until: endOfDay,

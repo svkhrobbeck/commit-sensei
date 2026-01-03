@@ -1,2 +1,2 @@
-export { default as octokit } from "./octokit";
+export { default as createOcktokit } from "./octokit";
 export { default as spreadsheet } from "./spreadsheet";

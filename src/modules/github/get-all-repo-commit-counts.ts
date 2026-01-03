@@ -1,13 +1,19 @@
-import { delay } from "../../utils";
-import { getWeeklyActiveRepos } from ".";
-import getTodaysCommits from "./get-todays-commits";
+import { delay } from "utilzify";
 
-const getAllRepoCommitCounts = async () => {
-  const repos = await getWeeklyActiveRepos();
+import { getWeeklyActiveRepos, getTodaysCommits } from ".";
+import { get } from "lodash";
+
+const getAllRepoCommitCounts = async (username: string, token: string) => {
+  const repos = await getWeeklyActiveRepos(username, token);
   let count = 0;
 
   for (const repo of repos) {
-    const { commits } = await getTodaysCommits(repo.name!);
+    const repoName = get(repo, "name");
+    const repoFullName = get(repo, "full_name");
+    const repoOwnerLogin = get(repo, "owner.login");
+
+    if (repoOwnerLogin !== username || !repoFullName.includes(username)) continue;
+    const { commits } = await getTodaysCommits(username, token, repoName!);
     count += commits.length;
     await delay(100);
   }

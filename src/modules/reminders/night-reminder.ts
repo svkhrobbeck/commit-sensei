@@ -1,80 +1,88 @@
 import dedent from "dedent";
+import { delay } from "utilzify";
 
-import summaryReminder from "./summary-reminder";
-import { getAllRepoCommitCounts } from "../github";
-import { getDeadline, getSetting, setDeadline, setSetting } from "../sheets";
-import { delay, formatDate, notifyDevelopers, sendMessageToChannel } from "../../utils";
+import { formatDate, notifyDevelopers } from "@/utils";
+
+import { getAllRepoCommitCounts } from "@/modules/github";
+import { getDeadline, getSettings, getUsers, setDeadline, setSetting } from "@/modules/sheets";
+
+import { summaryReminder } from ".";
 
 const nightReminder = async () => {
-  const todayCommitCounts = await getAllRepoCommitCounts();
-  const deadline = await getDeadline();
-  const setting = await getSetting();
+  const users = await getUsers();
+  const settings = await getSettings();
 
   const dateInstance = new Date();
   const todayDate = formatDate(dateInstance, "DD-MM-YYYY");
 
-  const isSummaryDay = dateInstance.getDay() === 0 && todayDate === setting.summaryDate;
-  const todayTaskIndex = deadline.findIndex(
-    item => item.date === todayDate && item.id === dateInstance.getDay() && !item.passed
-  );
+  for (const user of users) {
+    const setting = settings.find(s => s.userId === user.id)!;
+    const isSummaryDay = dateInstance.getDay() === 0 && todayDate === setting.summaryDate;
 
-  const tomorrowDeadline = deadline.find(
-    item => item.id === (dateInstance.getDay() + 1 > 6 ? 0 : dateInstance.getDay())
-  );
+    const deadline = await getDeadline(user.deadlineRange);
+    const todayCommitCounts = await getAllRepoCommitCounts(user.github, user.githubToken);
 
-  if (todayTaskIndex >= 0) {
-    const todayTask = deadline[todayTaskIndex];
+    const todayTaskIndex = deadline.findIndex(
+      item => item.date === todayDate && item.id === dateInstance.getDay() && !item.passed,
+    );
 
-    if (todayCommitCounts < todayTask.total) {
-      const stockCommit = todayTask.total - todayCommitCounts;
+    const tomorrowDeadline = deadline.find(
+      item => item.id === (dateInstance.getDay() + 1 > 6 ? 0 : dateInstance.getDay()),
+    );
 
-      const message = dedent`
-      #night_reminder
-      
-      Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!`;
+    if (todayTaskIndex >= 0) {
+      const todayTask = deadline[todayTaskIndex];
 
-      const channel_message = dedent`<b>
-      #daily_log
-      
-      Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!</b>`;
+      if (!todayTask) return;
+      if (todayCommitCounts < todayTask.total) {
+        const stockCommit = todayTask.total - todayCommitCounts;
 
-      await notifyDevelopers(message, false);
-      await delay(1000);
-      await sendMessageToChannel(channel_message);
-
-      await setSetting({ penaltyForNextWeek: setting.penaltyForNextWeek + stockCommit });
-      await delay(2000);
-    } else {
-      const message = dedent`
-      #night_reminder
-      
-      Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
-        todayTask.total
-      } ta)ni to'liq bajardingiz!!${
-        todayCommitCounts > setting.total
-          ? " Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
-          : ""
-      }`;
-
-      const channel_message = dedent`<b>#daily_log
+        const message = dedent`
+        #night_reminder
         
-      Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
-        todayTask.total
-      } ta)ni to'liq bajardingiz!! ${
-        todayCommitCounts > setting.total
-          ? "Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
-          : ""
-      } Ertanga yana kamida ${
-        tomorrowDeadline?.total || setting.averageDailyCommitCount
-      } ta commit rejalangan, bajarishni unutmang!
-      </b>`;
-      await notifyDevelopers(message, false);
-      await sendMessageToChannel(channel_message);
-    }
+        Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!`;
 
-    await setDeadline(todayTaskIndex, [{ passed: true, done: todayCommitCounts }]);
-    if (isSummaryDay) {
-      summaryReminder();
+        const channelMessage = dedent`<b>
+        #daily_log
+        
+        Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, limitni to'liq bajara olmadingiz, sizga kelasi hafta uchun ${stockCommit} ta jarima yoziladi!!</b>`;
+
+        await notifyDevelopers({ user, message, channelMessage });
+
+        await setSetting({ penaltyForNextWeek: setting.penaltyForNextWeek + stockCommit });
+        await delay(2000);
+      } else {
+        const message = dedent`
+        #night_reminder
+        
+        Bugun ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
+          todayTask.total
+        } ta)ni to'liq bajardingiz!!${
+          todayCommitCounts > setting.total
+            ? " Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
+            : ""
+        }`;
+
+        const channelMessage = dedent`
+        <b>#daily_log
+
+        Bugun githubga ${todayCommitCounts} ta commit yozdingiz, kun yakunlandi, kunlik limit(${
+          todayTask.total
+        } ta)ni to'liq bajardingiz!! ${
+          todayCommitCounts > setting.total
+            ? "Hattoki hafta limitini bir kunda bajardingiz, natijangiz bilan tabriklaymiz!"
+            : ""
+        } Ertanga yana kamida ${
+          tomorrowDeadline?.total || setting.averageDailyCommitCount
+        } ta commit rejalangan, bajarishni unutmang!</b>`;
+
+        await notifyDevelopers({ user, message, channelMessage });
+      }
+
+      await setDeadline(user.deadlineStartCol, todayTaskIndex, [{ passed: true, done: todayCommitCounts }]);
+      if (isSummaryDay) {
+        summaryReminder();
+      }
     }
   }
 };

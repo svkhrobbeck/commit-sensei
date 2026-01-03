@@ -1,4 +1,4 @@
-export const developerChadIds: number[] = String(process.env.CHAT_IDS).split("/").map(Number);
+export const developerChadIds: number[] = [];
 
 export const weekDays: { [key: number]: string } = {
   0: "Yakshanba",

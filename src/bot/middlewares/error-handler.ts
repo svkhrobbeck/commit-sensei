@@ -1,10 +1,18 @@
-import { ErrorHandler, GrammyError, HttpError } from "grammy";
+import { delay, extractErrorMessage } from "utilzify";
+import { type ErrorHandler, GrammyError, HttpError } from "grammy";
 
-import { extractErrorMessage, notifyError } from "../../utils";
+import { notifyDevelopers } from "@/utils";
+
+import { getUsers } from "@/modules/sheets";
 
 const errorHandler: ErrorHandler = async err => {
   const errorMessage = extractErrorMessage(err.error);
-  await notifyError(errorMessage);
+  const users = await getUsers();
+
+  for (const user of users) {
+    await notifyDevelopers({ user, message: errorMessage, isError: true });
+    await delay(500);
+  }
 
   if (err.error instanceof GrammyError) {
     console.error("Request error:", err.error.description);

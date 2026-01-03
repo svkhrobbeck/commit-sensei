@@ -1,4 +1,4 @@
-const parseWithType = (type: string = "", value: any, defaultValue: string | number = "") => {
+const parseWithType = (type: string = "", value: unknown, defaultValue: string | number = "") => {
   const matchTypes = ["string", "number", "boolean"];
 
   type = type.toLowerCase();
