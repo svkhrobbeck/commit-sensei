@@ -7,7 +7,7 @@ module.exports = {
       instances: 1,
       exec_mode: "fork",
       watch: false,
-      interpreter: "tsx",
+      interpreter: "bun",
     },
   ],
 };
