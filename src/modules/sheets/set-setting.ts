@@ -1,8 +1,8 @@
 import { spreadsheet } from "@/services";
 import { type ISetting } from "@/helpers";
 
-const setSetting = async (setting: Partial<ISetting>) => {
-  await spreadsheet.set(process.env.SPREADSHEET_ID!, "Setting!A4", [
+const setSetting = async (startRange: string, setting: Partial<ISetting>) => {
+  await spreadsheet.set(process.env.SPREADSHEET_ID!, `Settings!${startRange}`, [
     [
       setting.userId,
       setting.forWeek,

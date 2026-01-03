@@ -49,7 +49,11 @@ const nightReminder = async () => {
 
         await notifyDevelopers({ user, message, channelMessage });
 
-        await setSetting({ penaltyForNextWeek: setting.penaltyForNextWeek + stockCommit });
+        const settingRange = settings.findIndex(s => s.userId === user.id)! + 4;
+
+        if (settingRange >= 0) {
+          await setSetting(`A${settingRange}`, { penaltyForNextWeek: setting.penaltyForNextWeek + stockCommit });
+        }
         await delay(2000);
       } else {
         const message = dedent`
@@ -79,7 +83,10 @@ const nightReminder = async () => {
         await notifyDevelopers({ user, message, channelMessage });
       }
 
-      await setDeadline(user.deadlineStartCol, todayTaskIndex, [{ passed: true, done: todayCommitCounts }]);
+      await setDeadline(user.deadlineStartCol, todayTaskIndex, [
+        { date: undefined, passed: true, done: todayCommitCounts },
+      ]);
+
       if (isSummaryDay) {
         summaryReminder();
       }

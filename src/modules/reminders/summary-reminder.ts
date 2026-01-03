@@ -23,12 +23,16 @@ const summaryReminder = async () => {
     const penaltyCount = deadline.reduce((a, b) => a + b.penaltyForNextWeek, 0);
     const fullPenaltyCount = setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount;
 
-    await setSetting({
-      penaltyFromLastWeek: oldPenalties <= 0 ? fullPenaltyCount : oldPenalties + fullPenaltyCount,
-      penaltyForNextWeek: 0,
-      completed: completedCount,
-      summaryDate: newSummaryDate,
-    });
+    const settingRange = settings.findIndex(s => s.userId === user.id)! + 4;
+
+    if (settingRange >= 0) {
+      await setSetting(`A${settingRange}`, {
+        penaltyFromLastWeek: oldPenalties <= 0 ? fullPenaltyCount : oldPenalties + fullPenaltyCount,
+        penaltyForNextWeek: 0,
+        completed: completedCount,
+        summaryDate: newSummaryDate,
+      });
+    }
 
     await setHistory(deadline);
     await delay(1000);

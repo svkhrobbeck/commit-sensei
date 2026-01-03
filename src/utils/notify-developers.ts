@@ -21,7 +21,6 @@ const notifyDevelopers = async ({ user, message = "", ...opts }: NotifyDeveloper
 
   if (message) {
     await bot.api.sendMessage(user.telegramId, message, { parse_mode: "HTML" });
-    return;
   }
 
   if (user.mode === "channel" && opts.channelMessage) {
