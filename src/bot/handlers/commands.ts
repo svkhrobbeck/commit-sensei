@@ -1,7 +1,7 @@
 import { Composer } from "grammy";
 
-import { getStats } from "@/modules/reminders";
 import { getUsers } from "@/modules/sheets";
+import { getStats } from "@/modules/reminders";
 
 const commadsHandler = new Composer();
 
@@ -16,7 +16,7 @@ commadsHandler.command("stats", async ctx => {
 
   if (user) {
     const message = await ctx.reply("Iltimos, kuting...");
-    await getStats();
+    await getStats(chatId);
     await ctx.api.deleteMessage(chatId, message.message_id);
   } else {
     await ctx.reply("Uzr botni ishlatish huquqiga ega odamlar safida yo'qsiz");
