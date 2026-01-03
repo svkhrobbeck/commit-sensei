@@ -1,5 +1,4 @@
 import { InlineKeyboard } from "grammy";
-import { extractErrorMessage } from "utilzify";
 
 import bot from "@/bot/core";
 import type { IUser } from "@/helpers";
@@ -12,7 +11,7 @@ export interface NotifyDevelopersOptions {
 }
 
 const notifyDevelopers = async ({ user, message = "", ...opts }: NotifyDevelopersOptions): Promise<void> => {
-  const telegramMessage = `${opts.isError ? `<b>Xatolik yuz berdi</b>:${extractErrorMessage(message)}` : ""}`;
+  const telegramMessage = `${opts.isError ? `<b>Xatolik yuz berdi</b>:${message}` : ""}`;
   const channelInlineButton = new InlineKeyboard().url("Github akkauntingiz", `https://github.com/${user.github}`);
 
   if (opts.isError && message) {
