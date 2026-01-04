@@ -5,7 +5,7 @@ import { delay } from "utilzify";
 import { weekDays } from "@/helpers/constants";
 import { formatDate, getDaysInMs, notifyDevelopers } from "@/utils";
 
-import { getDeadline, getSettings, getUsers, setDeadline, setHistory, setSetting } from "@/modules/sheets";
+import { getDeadline, getSettings, getUsers, setHistory, setNewGeneratedDeadline, setSetting } from "@/modules/sheets";
 
 const summaryReminder = async () => {
   const users = await getUsers();
@@ -19,7 +19,8 @@ const summaryReminder = async () => {
     const newSummaryDate = formatDate(oldSummaryDate.getTime() + getDaysInMs(7), "DD-MM-YYYY");
 
     const completedCount = deadline.reduce((a, b) => a + b.done, 0);
-    const oldPenalties = setting.total - completedCount;
+    const isFullWeekCompleted = deadline.every(d => d.passed);
+    const oldPenalties = isFullWeekCompleted ? setting.total - completedCount : 0;
     const penaltyCount = deadline.reduce((a, b) => a + b.penaltyForNextWeek, 0);
     const fullPenaltyCount = setting.penaltyForNextWeek > penaltyCount ? setting.penaltyForNextWeek : penaltyCount;
 
@@ -55,14 +56,7 @@ const summaryReminder = async () => {
 
     await notifyDevelopers({ user, message, channelMessage: message });
 
-    const newDeadlines = [];
-
-    for (let i = 1; i <= 7; i++) {
-      const date = formatDate(oldSummaryDate.getTime() + getDaysInMs(i), "DD-MM-YYYY");
-      newDeadlines.push({ date, passed: false, done: 0 });
-    }
-
-    await setDeadline(user.deadlineStartCol, 0, newDeadlines);
+    await setNewGeneratedDeadline(user.deadlineStartCol);
   }
 };
 
