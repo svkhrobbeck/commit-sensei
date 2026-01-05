@@ -36,7 +36,7 @@ const getStats = async (chatId: number) => {
       todayCommitCounts > 0 ? `${todayCommitCounts} ta commit yozdingiz!` : "hechqancha commit yozmadingiz."
     } Commitlarni hisoblashda o'tgan haftadagi jarimalar hisobga olinadi.
     
-    Shuningdek siz umumiy hisobda bir roppa-rosa bir yil ichida ${allContributions.totalCommits} ta commit yozgansiz.
+    Shuningdek siz roppa-rosa bir yil ichida ${allContributions.totalCommits} ta commit yozgansiz.
     Shundan faqatgina ${allContributions.totalOwnerCommits} ta commit sizning o'zingizga tegishli repolarda yozilgan.
     `;
 
