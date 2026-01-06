@@ -6,8 +6,6 @@ import { formatDate, notifyDevelopers } from "@/utils";
 import { getAllRepoCommitCounts } from "@/modules/github";
 import { getDeadline, getSettings, getUsers, setDeadline, setSetting } from "@/modules/sheets";
 
-import { summaryReminder } from ".";
-
 const nightReminder = async () => {
   const users = await getUsers();
   const settings = await getSettings();
@@ -17,7 +15,6 @@ const nightReminder = async () => {
 
   for (const user of users) {
     const setting = settings.find(s => s.userId === user.id)!;
-    const isSummaryDay = dateInstance.getDay() === 0 && todayDate === setting.summaryDate;
 
     const deadline = await getDeadline(user.deadlineRange);
     const todayCommitCounts = await getAllRepoCommitCounts(user.github, user.githubToken);
@@ -86,10 +83,6 @@ const nightReminder = async () => {
       await setDeadline(user.deadlineStartCol, todayTaskIndex, [
         { date: undefined, passed: true, done: todayCommitCounts },
       ]);
-
-      if (isSummaryDay) {
-        summaryReminder();
-      }
     }
   }
 };
