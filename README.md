@@ -1,93 +1,161 @@
-# Bot Funksiyalari va Qoidalari
+# Commit Sensei 🤖
 
-## 1. Kunlik Commit Eslatmasi
-- **Vaqt**: Har kuni soat **07:00**.
-- **Mazmun**: Foydalanuvchiga **7 ta commit yozish** kerakligi eslatmasi yuboriladi.
-- **Qo‘shimcha**: Agar o‘tkazilgan haftadan jarima bo‘lsa, jarima hisobga olinadi va foydalanuvchi **jarimadan qoldirilgan commitlar**ni ham bajarishi kerak.
+[uzbek description](README_UZ.md)
 
-**Misol**:  
-"Bugun kamida 7 ta commit yozishingiz kerak. O‘tkazilgan haftadagi jarima hisobga olinadi."
+**Commit Sensei** is a Telegram-based discipline and motivation bot
+designed to force one simple habit: **write commits to your personal
+GitHub projects every single day.**
 
----
+No scrolling. No excuses. Just execution.
 
-## 2. Jarima Hisoblash
-- **Jarima Shartlari**:
-  - Agar foydalanuvchi biror kuni 7 ta commit yozmaydi, u holda jarima qo‘shiladi.
-  - Jarima — o‘tkazilgan commitlar soniga qarab hisoblanadi.
-  
-**Misol**:  
-- Haftada 10 commit yozilmagan bo‘lsa, jarima sifatida 10 commit qo‘shilishi kerak bo‘ladi.  
-- **Jarima** o‘tgan haftaning commitlaridan kelib chiqib **har kuni** hisoblanadi va foydalanuvchiga eslatiladi.
+------------------------------------------------------------------------
 
----
+## 🎯 Core Idea
 
-## 3. Kunlik Commitlar Va Jarimaga Ko‘ra Hisoblash
-- **Kunlik Commitlar Sonini Hisoblash**:
-  - Kunlik commitlar soni **7 ta commitdan kam bo‘lsa**, jarima hisobga olinadi.
-  - **Jarimadan ortiqcha commit yozilgan bo‘lsa**, ular haftalik limitni **ortiqcha commit deb hisoblanadi**, lekin bu jarimadan minus bo‘lmaydi.
-  
-**Misol**:  
-- Haftaning boshida jarima bo‘lsa (masalan, 5 ta commit), bot eslatma yuboradi va foydalanuvchiga **7 ta commit**ni yozish kerakligini bildiradi, lekin agar ortiqcha commit yozilsa, haftalik limitda minus bo‘lmaydi.
+Commit Sensei solves a common developer problem:
 
----
+-   Starting personal projects and abandoning them
+-   Going days (or weeks) without commits
+-   Relying on motivation instead of systems
 
-## 4. Maqtovlar
-- **Commitlar Sonidan Ko‘p Yozilganida**:
-  - Agar foydalanuvchi kunlik **7 ta commitdan ko‘p** yozsa, bot uni **maqtab** qo‘yadi.
-  
-**Misol**:  
-- "Ajoyib! Bugun commitlar soni juda yaxshi. Katta ishlarga erishdingiz!"
+The bot **only counts commits made to repositories you personally own**.
 
----
+-   Collaborator commits → **ignored**
+-   Organization repos → **ignored**
+-   Only owner-level repositories count
 
-## 5. Xato Commitlar Bilan Ma'lumot
-- Agar foydalanuvchi 30-40 commit yozib yuborsa, **bot eslatib qo‘yadi**, bu commitlar umumiy haftalik deadline’dna oshmasligi kerak.
-  
-**Misol**:  
-- "Bugun juda yaxshi ishladingiz! Ammo, 30-40 commit yozish orqali, umumiy haftalik limitni oshirib yubormang. Haftalik deadline bo‘yicha minus bo‘lmasligi uchun commitlar sonini balansda tuting."
+This design intentionally pushes developers to grow their **own
+portfolio**, not someone else's.
 
----
+------------------------------------------------------------------------
 
-## 6. Haftalik Commitlar Hisobi va Deadlinelar
-- **Haftalik Deadline**: Har hafta foydalanuvchiga jami haftalik commitlar soni beriladi.
-- **Jarima Hisobi**: Agar foydalanuvchi haftada **7 ta commitdan kam yozgan bo‘lsa**, jarima qo‘shiladi va bu jarima **haftaning har bir kuni** uchun hisoblanadi.
-- **Haftaning Oxirida Hisoblash**: Har hafta oxirida bot foydalanuvchiga o‘sha haftadagi jami commitlar sonini taqdim etadi va haftalik **deadlinelarni** hisoblab chiqaradi.
+## ⚙️ How It Works
 
-**Misol**:  
-- Haftaning oxirida bot quyidagi tarzda hisobot yuboradi:  
-  "Siz bugun jami 45 commit yozdingiz. Haftalik deadline — 50 commit. Sizning haftalik maqsadingizga 5 commit qolmoqda."
+1.  User joins the Telegram bot
+2.  Connects their GitHub account
+3.  Sets a daily commit target\
+    Examples:
+    -   7 commits/day → 49 commits/week
+    -   12 commits/day → 84 commits/week
+4.  The bot tracks activity daily and weekly
 
----
+Everything is automated. No manual input. No cheating.
 
-## 7. Google Sheets Integratsiyasi
-- **Commit Ma'lumotlari Saqlash**:  
-  - Har bir foydalanuvchining commitlar va jarimasi Google Sheets orqali saqlanadi.
-  - Har bir commit, jarima va haftalik statistikalar **Google Sheets**da saqlanadi va har doim bot tomonidan kuzatib boriladi.
+------------------------------------------------------------------------
 
----
+## 🧮 Penalty System (The Real Discipline)
 
-## 8. Motivatsiya va Bonuslar
-- **Motivatsion Xabarlar**: Agar foydalanuvchi belgilangan commitlar sonini bajarib, ortiqcha commit yozsa, bot uni **motivatsion xabar** yuboradi.
-- **Bonuslar**: Haftaning oxirida muvaffaqiyatli yakunlangan hafta uchun bonuslar yuboriladi.
+If a user **fails to reach the daily target**:
 
-**Misol**:  
-- "Agar haftada muvaffaqiyatli commit yozilgan bo‘lsa, bonus sifatida 5 ta qo‘shimcha commit yozish imkoniyati taqdim etiladi."
+-   Missing commits are recorded as **penalty**
+-   Penalties are transferred to the next week
+-   Penalties are evenly distributed across 7 days
+-   Any remainder is added to **Monday**
 
----
+### Example
 
-## 9. Jarima Hisoblash va Deadlinelar
-- **Jarima Hisoblash**: Agar foydalanuvchi haftada bir necha kun commit yozishni unutgan bo‘lsa, kelasi hafta **7 tadan ko‘proq commit yozilishi kerak** va bu commitlar jarima sifatida hisoblanadi.  
-- **Deadline**: Har hafta jarima sifatida yozilishi kerak bo‘lgan commitlar, agar bajarilmasa, yana jarima sifatida qo‘shiladi.
+-   Daily target: 12 commits\
+-   Commits written today: 5\
+-   Missing commits: 7
 
----
+Next week: - 7 ÷ 7 = +1 commit/day - New daily target: **13
+commits/day**
 
-## 10. Foydalanuvchi Faoliyatini Kuzatish
-- **Faoliyat Statistikasi**: Har hafta foydalanuvchining **eng ko‘p ishlagan repo** va kamroq ishlagan kunlarini aniqlash va bot tomonidan statistik ma'lumotlarni taqdim etish.
-- **Eng Kam Faol Kunlar**: Haftalik statistikada, qaysi kunlarda kamroq commit yozilganini bot foydalanuvchiga bildiradi.
+Penalties stack until fully repaid.
 
----
+No mercy. No resets.
 
-## 11. Haftalik Hisobot
-- Haftaning oxirida bot foydalanuvchiga jami commitlar, qo‘shilgan jarimalar va barcha hafta davomida o‘tkazilgan ishlash jarayonlarini taqdim etadi.
+------------------------------------------------------------------------
 
----
+## ⏰ Reminder System (5 Layers)
+
+### 1️⃣ Morning Reminder --- 07:00
+
+-   Today's required commit count
+-   Includes penalties (if any)
+
+### 2️⃣ Afternoon Reminder --- 14:00
+
+-   Commits written so far today
+-   Remaining commits to hit the target
+
+### 3️⃣ Evening Reminder --- 20:00
+
+-   4 hours left until day ends
+-   Praise if target is completed
+-   Warning if still behind
+
+### 4️⃣ Night Summary --- 23:58
+
+-   Daily activity summary
+-   Success or failure confirmation
+-   Penalties calculated and stored
+-   Sent to:
+    -   the user directly
+    -   or a configured Telegram channel
+
+### 5️⃣ Weekly Summary --- Sunday 23:58
+
+-   Total commits for the week
+-   Total penalties accumulated
+-   Motivation for next week
+-   System & database reset for the new cycle
+
+------------------------------------------------------------------------
+
+## 🔐 Strict Rules
+
+-   Only **repository owner** commits count
+-   Collaboration commits are ignored
+-   All **7 days matter**
+-   Missing even one day triggers penalties
+
+This is not a streak toy.\
+This is a commitment contract.
+
+------------------------------------------------------------------------
+
+## 🧠 Why Commit Sensei Works
+
+-   Zero fake activity
+-   Pure GitHub data
+-   Real accountability
+-   Portfolio-driven growth
+-   Discipline over motivation
+
+Commit Sensei moves you from: \> "I'll code when I feel like it"\
+to\
+\> "I must code today."
+
+------------------------------------------------------------------------
+
+## 🛠 Tech Stack
+
+-   Telegram Bot API
+-   GitHub REST & GraphQL APIs
+-   TypeScript
+-   Node.js / Bun
+-   Cron-based scheduler
+-   Custom penalty engine
+
+------------------------------------------------------------------------
+
+## 🚀 Roadmap
+
+-   Streak tracking
+-   Public leaderboards
+-   Web dashboard
+-   Repo-level analytics
+-   AI-based commit quality insights
+
+------------------------------------------------------------------------
+
+## 📌 Final Words
+
+Commit Sensei is not a friendly reminder.
+
+It is a **daily enforcement system for developers who want real
+progress**.
+
+If you are serious about your personal projects ---\
+**Commit Sensei will not let you disappear.**
